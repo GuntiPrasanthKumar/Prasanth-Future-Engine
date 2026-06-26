@@ -5,38 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gunti Prasanth Kumar | Full Stack Developer Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Using a professional Google Font for better typography -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        /* =================== Root Colors (Professional Dark Palette) =================== */
+        /* =================== Root Colors =================== */
         :root {
-            --dark-bg: #1A1A2E;
-            --section-bg: #24243A;
-            --card-bg: #2B2B45;
-            --accent-color: #00BFFF;
-            --accent-light: #4DD8FF;
-            --text-primary: #F0F0F0;
-            --text-secondary: #C0C0C0;
-            --shadow-color: rgba(0, 191, 255, 0.2);
-            --soft-skills-bg: #323E56;
-            --soft-skills-text: #E6F7FF;
-            --soft-skills-accent: #87CEFA;
+            --dark-bg: #0A0A1F;
+            --section-bg: #14142F;
+            --card-bg: #1C1C3A;
+            --accent-color: #00FFFF;
+            --accent-light: #66FFFF;
+            --text-primary: #E0E0E0;
+            --text-secondary: #AAAAAA;
+            --shadow-color: rgba(0, 255, 255, 0.2);
+            --soft-skills-bg: #2B3544;
+            --soft-skills-text: #E5E7EB;
+            --soft-skills-accent: #6EE7B7;
             --font-family: 'Poppins', sans-serif;
+            --mono-font: 'Poppins', sans-serif;
+            --cursor-x: 50%;
+            --cursor-y: 50%;
         }
         
         /* Light Theme Colors */
         .light-theme {
-            --dark-bg: #FFFFFF;
-            --section-bg: #F0F2F5;
-            --card-bg: #EAEFF4;
-            --accent-color: #007BFF;
-            --accent-light: #0056B3;
-            --text-primary: #333333;
-            --text-secondary: #555555;
-            --shadow-color: rgba(0, 123, 255, 0.2);
-            --soft-skills-bg: #E0E7F5;
-            --soft-skills-text: #2C3E50;
+            --dark-bg: #F0F2F5;
+            --section-bg: #E5E7EB;
+            --card-bg: #FFFFFF;
+            --accent-color: #1E90FF;
+            --accent-light: #3AABFF;
+            --text-primary: #374151;
+            --text-secondary: #6B7280;
+            --shadow-color: rgba(30, 144, 255, 0.2);
+            --soft-skills-bg: #E5E7EB;
+            --soft-skills-text: #374151;
             --soft-skills-accent: #6495ED;
+            --dynamic-bg-light: #E0E7FF;
+        }
+        
+        .light-theme .hero {
+            background-color: var(--dynamic-bg-light, var(--section-bg));
+            background-image: none;
+            transition: background-color 1s ease;
         }
 
         /* Global Styles */
@@ -69,7 +78,6 @@
         section {
             padding: 100px 0;
             position: relative;
-            /* Animation for sections on scroll */
             opacity: 0;
             transform: translateY(20px);
             transition: opacity 0.8s ease-out, transform 0.8s ease-out;
@@ -100,22 +108,23 @@
             transition: background 0.5s ease;
         }
 
-        /* Navigation */
+        /* Navigation - Glassmorphism style */
         nav {
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(26, 26, 46, 0.9);
+            background: rgba(10, 10, 31, 0.4);
             backdrop-filter: blur(10px);
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+            -webkit-backdrop-filter: blur(10px);
             z-index: 1000;
             padding: 1rem 0;
-            transition: background 0.5s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: background 0.5s ease, border-bottom 0.5s ease;
         }
 
         .light-theme nav {
-            background: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.4);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         }
         
         nav .container {
@@ -139,6 +148,7 @@
             font-weight: 500;
             position: relative;
             transition: color 0.3s ease;
+            padding-bottom: 10px; /* Space for the underline */
         }
         
         nav a:hover, nav a.active {
@@ -148,14 +158,12 @@
         nav a::after {
             content: '';
             position: absolute;
-            left: 50%;
-            bottom: -8px;
-            width: 0;
-            height: 3px;
+            left: 0;
+            bottom: 0;
+            width: 0%;
+            height: 2px;
             background: var(--accent-color);
-            border-radius: 2px;
-            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            transform: translateX(-50%);
+            transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
         nav a:hover::after, nav a.active::after {
@@ -184,20 +192,44 @@
 
         .theme-toggle:hover {
             background: var(--accent-color);
-            color: white;
+            color: var(--dark-bg);
             transform: scale(1.1);
         }
 
-        /* Hero Section */
+        /* Hero Section - Unique Animated Background */
         .hero {
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             min-height: 100vh;
-            background: linear-gradient(135deg, var(--dark-bg) 0%, #16213e 100%);
-            padding-top: 80px;
+            position: relative;
+            overflow: hidden;
+            background-color: var(--dark-bg);
+            background-image: linear-gradient(rgba(10, 10, 31, 0.9), rgba(10, 10, 31, 0.9)), 
+                              linear-gradient(to right, transparent 1px, #1a1a40 1px), 
+                              linear-gradient(to bottom, transparent 1px, #1a1a40 1px);
+            background-size: 100%, 50px 50px, 50px 50px;
+            transition: background-color 1s ease;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at var(--cursor-x) var(--cursor-y), var(--accent-color) 0%, transparent 25%);
+            opacity: 0.2;
+            filter: blur(80px);
+            pointer-events: none;
             transition: background 0.5s ease;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 3;
         }
 
         .hero h1 {
@@ -206,12 +238,11 @@
             line-height: 1.2;
             margin-bottom: 1rem;
             color: var(--text-primary);
+            font-family: var(--mono-font);
         }
         
         .hero h1 span {
-            background: linear-gradient(90deg, #4dd8ff, #00BFFF);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--accent-light);
         }
 
         .hero p {
@@ -221,12 +252,37 @@
             max-width: 600px;
             margin: 0 auto 2rem;
         }
+
+        /* New Dynamic Skill Icons Section */
+        #dynamic-skills {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 80px;
+            position: relative;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        #dynamic-skills img {
+            width: 70px;
+            height: 70px;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            position: absolute;
+        }
+
+        #dynamic-skills img.active {
+            opacity: 1;
+            transform: scale(1);
+        }
         
         .btn {
             display: inline-block;
             padding: 15px 40px;
             background: var(--accent-color);
-            color: var(--text-primary);
+            color: var(--dark-bg);
             text-decoration: none;
             border-radius: 50px;
             font-weight: 600;
@@ -259,21 +315,30 @@
             position: relative;
             width: 250px;
             height: 250px;
+            margin: 0 auto;
             border-radius: 50%;
             overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-            margin: 0 auto;
+            border: 5px solid var(--accent-color);
+            transition: all 0.5s ease;
+            box-shadow: 0 0 20px var(--shadow-color);
+        }
+
+        .profile-photo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px var(--shadow-color);
         }
         
         .profile-photo img {
             width: 100%;
-            height: 100%;
+            height: 140%;
             object-fit: cover;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, filter 0.3s ease;
+            object-position: 50% 50%; 
+            /* filter: grayscale(100%); */
         }
-
+        
         .profile-photo:hover img {
-            transform: scale(1.05);
+            filter: grayscale(0%);
         }
 
         .bio-text {
@@ -376,7 +441,7 @@
         }
 
         .tech-badge {
-            background: rgba(0, 191, 255, 0.1);
+            background: rgba(0, 255, 255, 0.1);
             color: var(--accent-light);
             padding: 8px 15px;
             border-radius: 20px;
@@ -384,7 +449,7 @@
             font-weight: 500;
             transition: background 0.5s ease, color 0.5s ease;
         }
-
+        
         .project-links a {
             color: var(--accent-light);
             text-decoration: none;
@@ -434,7 +499,7 @@
         }
 
         .skill-badge {
-            background: #424263;
+            background: var(--section-bg);
             color: var(--text-primary);
             width: 60px;
             height: 60px;
@@ -475,7 +540,7 @@
         }
 
         .soft-skills-category .skill-badge {
-            background: rgba(0, 191, 255, 0.1);
+            background: rgba(0, 255, 255, 0.1);
             color: var(--accent-light);
             width: auto;
             height: auto;
@@ -490,20 +555,64 @@
         }
 
         .soft-skills-category .skill-badge:hover {
-            background: rgba(0, 191, 255, 0.2);
+            background: rgba(0, 255, 255, 0.2);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
             transform: translateY(-5px);
         }
         
         .light-theme .soft-skills-category .skill-badge {
-            background: rgba(0, 123, 255, 0.1);
+            background: rgba(30, 144, 255, 0.1);
             color: var(--accent-color);
         }
 
         .light-theme .soft-skills-category .skill-badge:hover {
-            background: rgba(0, 123, 255, 0.2);
+            background: rgba(30, 144, 255, 0.2);
         }
 
+        /* New Gemini API Response Styling */
+        #response-container {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border-left: 4px solid var(--accent-color);
+            display: none; /* Initially hidden */
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        #response-container h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--accent-light);
+            margin-bottom: 1rem;
+        }
+        
+        #response-container p {
+            font-family: var(--mono-font);
+            color: var(--text-secondary);
+            white-space: pre-wrap;
+        }
+        
+        .loading-spinner {
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-left-color: var(--accent-color);
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-left: 10px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
         /* Certifications */
         .certifications-list {
@@ -582,9 +691,14 @@
         .contact-form textarea:focus {
             outline: none;
             border-color: var(--accent-color);
-            box-shadow: 0 0 0 3px rgba(0, 191, 255, 0.3);
+            box-shadow: 0 0 0 3px var(--shadow-color);
         }
 
+        .contact-form .form-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
         .contact-form button {
             cursor: pointer;
             padding: 15px;
@@ -593,12 +707,23 @@
             font-size: 1.1rem;
             font-weight: 700;
             background: var(--accent-color);
-            color: white;
+            color: var(--dark-bg);
             transition: background-color 0.3s ease;
+        }
+        
+        .contact-form .ai-button {
+            background: var(--card-bg);
+            border: 1px solid var(--accent-color);
+            color: var(--accent-light);
         }
 
         .contact-form button:hover {
             background: var(--accent-light);
+        }
+        
+        .contact-form .ai-button:hover {
+            background: var(--accent-color);
+            color: var(--dark-bg);
         }
         
         #form-status {
@@ -631,7 +756,7 @@
             padding: 2rem 0;
             color: var(--text-secondary);
             font-size: 0.9rem;
-            border-top: 1px solid #2e2e2e;
+            border-top: 1px solid #374151;
             margin-top: 2rem;
             transition: border-color 0.5s ease;
         }
@@ -674,6 +799,10 @@
             .info-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .contact-form .form-actions {
+                flex-direction: column;
+            }
         }
 
         @media (max-width: 480px) {
@@ -712,6 +841,8 @@
                 <h1>Full Stack Developer Creating Modern <span>Web Experiences</span></h1>
                 <p>Passionate developer specializing in React, Java, and Python with hands-on experience building responsive web and mobile applications.</p>
                 
+                <div id="dynamic-skills"></div>
+
                 <div class="btn-group">
                     <a href="#projects" class="btn">Explore Projects</a>
                 </div>
@@ -725,12 +856,7 @@
             <h2 class="section-title">About Me</h2>
             <div class="about-content">
                 <div class="profile-photo">
-                    <!-- Profile Photo -->
-<<<<<<< Updated upstream
-                    <img src="23P31A1285.jpg" alt="Gunti Prasanth Kumar Profile Photo">
-=======
                     <img src="./23P31A1285.png" alt="Gunti Prasanth Kumar Profile Photo">
->>>>>>> Stashed changes
                 </div>
                 <div>
                     <div class="bio-text">
@@ -738,20 +864,20 @@
                     </div>
                     <div class="info-grid" style="margin-top: 2rem;">
                         <div class="info-item">
-                            <span class="info-label">Name:</span>
-                            <span class="info-value">Gunti Prasanth Kumar</span>
+                            <span class="info-label" style="color: #6B7280;">Name:</span>
+                            <span class="info-value" style="color: #6B7280;">Gunti Prasanth Kumar</span>
                         </div>
                         <div class="info-item">
-                            <span class="info-label">Location:</span>
-                            <span class="info-value">Rajahmundry, India</span>
+                            <span class="info-label" style="color: #6B7280;">Location:</span>
+                            <span class="info-value" style="color: #6B7280;">Rajahmundry, India</span>
                         </div>
                         <div class="info-item">
-                            <span class="info-label">Email:</span>
-                            <span class="info-value">prasanthgunti07@gmail.com</span>
+                            <span class="info-label" style="color: #6B7280;">Email:</span>
+                            <span class="info-value" style="color: #6B7280;">prasanthgunti07@gmail.com</span>
                         </div>
                         <div class="info-item">
-                            <span class="info-label">Phone:</span>
-                            <span class="info-value">+91 6301803279</span>
+                            <span class="info-label" style="color: #6B7280;">Phone:</span>
+                            <span class="info-value" style="color: #6B7280;">+91 6301803279</span>
                         </div>
                     </div>
                 </div>
@@ -959,9 +1085,16 @@
                             <label for="message">Message</label>
                             <textarea id="message" name="message" rows="5" required></textarea>
                         </div>
-                        <button type="submit">Send Message</button>
-                        <p id="form-status"></p>
+                        <div class="form-actions">
+                            <button type="submit">Send Message</button>
+                            <button type="button" class="ai-button" id="aiDraftBtn">✨ Draft Response</button>
+                            <button type="button" class="ai-button" id="aiCoverLetterBtn">✨ Generate Cover Letter</button>
+                        </div>
                     </form>
+                    <div id="response-container">
+                        <h4>AI-Drafted Content:</h4>
+                        <p id="ai-response"></p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -974,21 +1107,60 @@
     </footer>
 
     <script>
-        // Experience Counter Animation - Kept for reference but not used in the new design for simplicity
-        function animateCounter(id, start, end, duration) {
-            const el = document.getElementById(id);
-            let startTime = null;
-            function animate(time) {
-                if (!startTime) startTime = time;
-                const progress = Math.min((time - startTime) / duration, 1);
-                const val = Math.floor(progress * (end - start) + start);
-                el.textContent = val;
-                if (progress < 1) requestAnimationFrame(animate);
-                else el.textContent = end;
-            }
-            requestAnimationFrame(animate);
+        // Interactive Background Effect
+        document.addEventListener('mousemove', (e) => {
+            const body = document.body;
+            const x = (e.clientX / window.innerWidth) * 100;
+            const y = (e.clientY / window.innerHeight) * 100;
+            body.style.setProperty('--cursor-x', `${x}%`);
+            body.style.setProperty('--cursor-y', `${y}%`);
+        });
+
+        // Dynamic Skill Icons and Background Animation
+        const skillsData = [
+            { icon: "https://skillicons.dev/icons?i=java", color: "#007396", lightColor: "#ADD8E6" },
+            { icon: "https://skillicons.dev/icons?i=python", color: "#306998", lightColor: "#B0C4DE" },
+            { icon: "https://skillicons.dev/icons?i=react", color: "#61DAFB", lightColor: "#E0FFFF" },
+            { icon: "https://skillicons.dev/icons?i=nodejs", color: "#339933", lightColor: "#90EE90" },
+            { icon: "https://skillicons.dev/icons?i=mongodb", color: "#47A248", lightColor: "#98FB98" },
+            { icon: "https://skillicons.dev/icons?i=html", color: "#E34F26", lightColor: "#FFDAB9" },
+            { icon: "https://skillicons.dev/icons?i=css", color: "#1572B6", lightColor: "#87CEFA" }
+        ];
+        
+        let currentSkillIndex = 0;
+        const dynamicSkillsContainer = document.getElementById('dynamic-skills');
+        const heroSection = document.getElementById('home');
+        
+        function changeSkill() {
+            const currentSkill = skillsData[currentSkillIndex];
+            
+            // Update background color based on theme
+            const isLightTheme = document.body.classList.contains('light-theme');
+            heroSection.style.backgroundColor = isLightTheme ? currentSkill.lightColor : currentSkill.color;
+
+            // Create new icon element
+            const newIcon = document.createElement('img');
+            newIcon.src = currentSkill.icon;
+            newIcon.alt = "Skill Icon";
+            
+            // Add to the container and fade in
+            dynamicSkillsContainer.innerHTML = '';
+            dynamicSkillsContainer.appendChild(newIcon);
+
+            setTimeout(() => {
+                newIcon.classList.add('active');
+            }, 10); // Small delay for transition to work
+
+            // Prepare for the next skill
+            currentSkillIndex = (currentSkillIndex + 1) % skillsData.length;
         }
 
+        // Initial call and set interval for subsequent changes
+        window.addEventListener('DOMContentLoaded', () => {
+            changeSkill();
+            setInterval(changeSkill, 3000); // Change icon every 3 seconds
+        });
+        
         // Dark/Light Theme Toggle
         const themeToggleBtn = document.getElementById('themeToggle');
         const themeIcon = themeToggleBtn.querySelector('i');
@@ -1011,6 +1183,9 @@
             localStorage.setItem('theme', isLightTheme ? 'light' : 'dark');
             themeIcon.classList.toggle('fa-moon', !isLightTheme);
             themeIcon.classList.toggle('fa-sun', isLightTheme);
+
+            // Re-run the skill animation to get the correct background color for the new theme
+            changeSkill();
         });
 
         // Intersection Observer for Animations
@@ -1084,6 +1259,89 @@
             
             // Clear the form
             document.getElementById('contactForm').reset();
+        });
+        
+        // Gemini API Integration for Contact Form
+        const messageTextarea = document.getElementById('message');
+        const responseContainer = document.getElementById('response-container');
+        const aiResponseParagraph = document.getElementById('ai-response');
+        
+        // New function to handle API calls
+        async function callGeminiApi(prompt) {
+            try {
+                const apiKey = ""; 
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+                
+                const payload = {
+                    contents: [{ parts: [{ text: prompt }] }],
+                    tools: [{ "google_search": {} }],
+                };
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                const result = await response.json();
+                return result.candidates[0].content.parts[0].text;
+            } catch (error) {
+                console.error('Gemini API call failed:', error);
+                throw new Error('Failed to generate a response. Please try again later.');
+            }
+        }
+        
+        // Event listener for Draft Response button
+        document.getElementById('aiDraftBtn').addEventListener('click', async () => {
+            const message = messageTextarea.value.trim();
+            if (!message) {
+                aiResponseParagraph.textContent = 'Please enter a message to generate a response.';
+                responseContainer.style.display = 'block';
+                return;
+            }
+
+            aiResponseParagraph.innerHTML = 'Generating draft... <span class="loading-spinner"></span>';
+            responseContainer.style.display = 'block';
+            
+            const prompt = `Act as a professional assistant for Gunti Prasanth Kumar. A person named "${document.getElementById('name').value}" with email "${document.getElementById('email').value}" sent you the following message: "${message}". Please draft a polite, professional, and concise response to this message. The response should thank them for reaching out and state that Prasanth will get back to them soon. Do not include a subject line or a salutation.`;
+            
+            try {
+                const generatedText = await callGeminiApi(prompt);
+                aiResponseParagraph.textContent = generatedText;
+            } catch (error) {
+                aiResponseParagraph.textContent = error.message;
+            }
+        });
+        
+        // Event listener for Generate Cover Letter button
+        document.getElementById('aiCoverLetterBtn').addEventListener('click', async () => {
+            aiResponseParagraph.innerHTML = 'Generating cover letter... <span class="loading-spinner"></span>';
+            responseContainer.style.display = 'block';
+
+            // Scrape skills and projects from the page
+            const skills = Array.from(document.querySelectorAll('.skills-grid .skill-badge')).map(el => el.textContent.trim()).join(', ');
+            const projects = Array.from(document.querySelectorAll('.project-card')).map(card => {
+                const title = card.querySelector('.project-title').textContent.trim();
+                const desc = card.querySelector('.project-desc').textContent.trim();
+                const techStack = Array.from(card.querySelectorAll('.tech-badge')).map(el => el.textContent.trim()).join(', ');
+                return `Project: ${title}\nDescription: ${desc}\nTechnologies: ${techStack}`;
+            }).join('\n\n');
+
+            const prompt = `You are a career expert helping a full-stack developer, Gunti Prasanth Kumar, write a cover letter.
+            
+            Here are his skills: ${skills}
+            
+            Here are some of his projects:
+            ${projects}
+            
+            Please draft a concise and professional cover letter highlighting his skills and experience. The letter should be suitable for applying for a full-stack developer position. Do not include placeholders like [Hiring Manager Name] or [Company Name]. Focus on a strong, general statement of purpose.`;
+            
+            try {
+                const generatedText = await callGeminiApi(prompt);
+                aiResponseParagraph.textContent = generatedText;
+            } catch (error) {
+                aiResponseParagraph.textContent = error.message;
+            }
         });
     </script>
 </body>
