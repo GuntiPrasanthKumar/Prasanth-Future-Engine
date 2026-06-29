@@ -1,0 +1,274 @@
+import { useState, useEffect, useMemo } from 'react';
+import { motion } from 'framer-motion';
+import { Cpu, Box, Code, Rocket } from 'lucide-react';
+
+// Reusable animated floating card
+const FloatingCard = ({ icon: Icon, title, desc, delay, top, left, right, bottom, floatPath, mousePosition }) => {
+  // Simple 3D tilt based on mouse position
+  const tiltX = mousePosition.y * 10; // degrees
+  const tiltY = mousePosition.x * -10;
+
+  return (
+    <motion.div
+      className="floating-glass-card"
+      style={{ top, left, right, bottom, zIndex: 20 }}
+      initial={{ opacity: 0, scale: 0.9, y: 20 }}
+      animate={{ 
+        opacity: 1, 
+        scale: 1, 
+        y: 0,
+        rotateX: tiltX,
+        rotateY: tiltY
+      }}
+      transition={{ 
+        opacity: { duration: 0.8, delay, ease: 'easeOut' },
+        scale: { duration: 0.8, delay, ease: 'easeOut' },
+        y: { duration: 0.8, delay, ease: 'easeOut' },
+        rotateX: { type: 'spring', stiffness: 50, damping: 20 },
+        rotateY: { type: 'spring', stiffness: 50, damping: 20 }
+      }}
+    >
+      <motion.div
+        style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}
+        animate={floatPath}
+        transition={{
+          duration: Math.random() * 4 + 6, // 6-10 seconds
+          repeat: Infinity,
+          repeatType: "mirror",
+          ease: "easeInOut"
+        }}
+      >
+        <div className="card-icon">
+          <Icon size={24} />
+        </div>
+        <div className="card-content">
+          <h4 className="card-title">{title}</h4>
+          <p className="card-desc">{desc}</p>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+};
+
+export default function About() {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      const x = (e.clientX / window.innerWidth) * 2 - 1;
+      const y = (e.clientY / window.innerHeight) * 2 - 1;
+      setMousePosition({ x, y });
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  // Generate rich background particles (Stars + Dust)
+  const particles = useMemo(() => {
+    const arr = [];
+    // Tiny sharp stars
+    for (let i = 0; i < 30; i++) {
+      arr.push({
+        top: `${Math.random() * 100}%`, left: `${Math.random() * 100}%`,
+        size: Math.random() * 2 + 1, blur: 0, opacity: Math.random() * 0.5 + 0.3,
+        duration: Math.random() * 5 + 5, delay: Math.random() * 5, type: 'star'
+      });
+    }
+    // Ambient dust (larger, blurred)
+    for (let i = 0; i < 20; i++) {
+      arr.push({
+        top: `${Math.random() * 100}%`, left: `${Math.random() * 100}%`,
+        size: Math.random() * 6 + 4, blur: Math.random() * 4 + 2, opacity: Math.random() * 0.2 + 0.1,
+        duration: Math.random() * 10 + 10, delay: Math.random() * 5, type: 'dust'
+      });
+    }
+    return arr;
+  }, []);
+
+  return (
+    <section className="section" style={{ height: '100vh', overflow: 'hidden', padding: '0 5vw' }}>
+      <div className="about-layout">
+        
+        {/* LEFT COLUMN: TIMELINE */}
+        <div className="timeline-section">
+          <div className="timeline-group">
+            <h2 className="timeline-header">Background</h2>
+            <div className="timeline-item">
+              <div className="timeline-dot" />
+              <div className="timeline-date">2023 - 2027</div>
+              <h3 className="timeline-title">B.Tech in Information Technology</h3>
+              <p className="timeline-inst">Aditya College of Engineering and Technology</p>
+            </div>
+            <div className="timeline-item">
+              <div className="timeline-dot" />
+              <div className="timeline-date">2021 - 2023</div>
+              <h3 className="timeline-title">Intermediate (MPC)</h3>
+              <p className="timeline-inst">Pragathi Junior College</p>
+            </div>
+            <div className="timeline-item">
+              <div className="timeline-dot" />
+              <div className="timeline-date">2016 - 2021</div>
+              <h3 className="timeline-title">High School</h3>
+              <p className="timeline-inst">Zilla Parishadh High School</p>
+            </div>
+          </div>
+
+          <div className="timeline-group">
+            <h2 className="timeline-header">Experience</h2>
+            <div className="timeline-item">
+              <div className="timeline-dot" />
+              <div className="timeline-date">MAY 2025 - JUN 2025</div>
+              <h3 className="timeline-title">Software Development Intern</h3>
+              <p className="timeline-inst">Technical Hub</p>
+              <p className="timeline-inst" style={{ marginTop: '0.8rem', opacity: 0.8 }}>
+                Built responsive UI modules, supported backend maintained code using Git/GitHub.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* RIGHT COLUMN: PORTRAIT & CARDS */}
+        <div className="portrait-section" style={{ perspective: '1000px' }}>
+          
+          {/* Deep Radial Background Glow */}
+          <motion.div style={{
+            position: 'absolute',
+            top: '50%', left: '50%',
+            width: '800px', height: '800px',
+            background: 'radial-gradient(circle, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 30%, transparent 60%)',
+            zIndex: 0,
+            x: `calc(-50% + ${mousePosition.x * -20}px)`,
+            y: `calc(-50% + ${mousePosition.y * -20}px)`,
+          }} />
+
+          {/* Premium Animated SVG Rings - Perfectly Centered */}
+          <div style={{ position: 'absolute', top: '50%', left: '50%', width: 0, height: 0, zIndex: 1, pointerEvents: 'none' }}>
+            {/* Outer dotted ring */}
+            <motion.svg viewBox="0 0 100 100" style={{ position: 'absolute', top: '-350px', left: '-350px', width: '700px', height: '700px', opacity: 0.5, filter: 'drop-shadow(0 0 5px rgba(255,255,255,0.8)) drop-shadow(0 0 10px rgba(255,255,255,0.4))' }}
+              animate={{ rotate: 360 }} transition={{ duration: 250, repeat: Infinity, ease: "linear" }}>
+              <circle cx="50" cy="50" r="48" fill="none" stroke="#fff" strokeWidth="0.15" strokeDasharray="1 3" />
+            </motion.svg>
+            {/* Middle segmented ring */}
+            <motion.svg viewBox="0 0 100 100" style={{ position: 'absolute', top: '-300px', left: '-300px', width: '600px', height: '600px', opacity: 0.6, filter: 'drop-shadow(0 0 6px rgba(255,255,255,0.8)) drop-shadow(0 0 15px rgba(255,255,255,0.4))' }}
+              animate={{ rotate: -360 }} transition={{ duration: 200, repeat: Infinity, ease: "linear" }}>
+              <circle cx="50" cy="50" r="45" fill="none" stroke="#fff" strokeWidth="0.2" strokeDasharray="20 10 5 10" />
+            </motion.svg>
+            {/* Inner faint ring */}
+            <motion.svg viewBox="0 0 100 100" style={{ position: 'absolute', top: '-200px', left: '-200px', width: '400px', height: '400px', opacity: 0.7, filter: 'drop-shadow(0 0 8px rgba(255,255,255,0.8)) drop-shadow(0 0 20px rgba(255,255,255,0.4))' }}
+              animate={{ rotate: 360 }} transition={{ duration: 180, repeat: Infinity, ease: "linear" }}>
+              <circle cx="50" cy="50" r="40" fill="none" stroke="#fff" strokeWidth="0.1" />
+            </motion.svg>
+          </div>
+          
+          {/* Almost Invisible Platform (Centered under portrait) */}
+          <div style={{
+            position: 'absolute',
+            top: '50%', left: '50%',
+            marginTop: '150px', // Push down below portrait center
+            marginLeft: '-200px', // Center horizontally
+            width: '400px',
+            height: '80px',
+            borderRadius: '50%',
+            transform: 'rotateX(75deg)',
+            background: 'radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%)',
+            boxShadow: '0 0 20px rgba(255,255,255,0.02)',
+            zIndex: 1,
+            pointerEvents: 'none'
+          }} />
+
+          {/* Particle Field */}
+          <div style={{ position: 'absolute', inset: -150, zIndex: 2, pointerEvents: 'none' }}>
+            {particles.map((p, i) => (
+              <motion.div
+                key={i}
+                className="particle"
+                style={{ 
+                  top: p.top, left: p.left, width: p.size, height: p.size, 
+                  filter: `blur(${p.blur}px)`, opacity: p.opacity,
+                  boxShadow: p.type === 'star' ? '0 0 15px rgba(255,255,255,1), 0 0 30px rgba(255,255,255,1), 0 0 60px rgba(255,255,255,0.8)' : '0 0 20px rgba(255,255,255,0.4)'
+                }}
+                animate={{ 
+                  y: [0, -40, 0], 
+                  x: [0, (Math.random() - 0.5) * 20, 0],
+                  opacity: [p.opacity * 0.5, p.opacity, p.opacity * 0.5] 
+                }}
+                transition={{ duration: p.duration, delay: p.delay, repeat: Infinity, ease: 'easeInOut' }}
+              />
+            ))}
+          </div>
+
+          {/* Floating Portrait with Mask & Glow */}
+          <motion.div 
+            className="portrait-image-wrapper"
+            style={{ 
+              position: 'relative', 
+              zIndex: 10,
+              width: '400px',
+              x: mousePosition.x * 10, // Subtle Mouse Parallax
+              y: mousePosition.y * 10,
+            }}
+            animate={{ 
+              y: [0, -10, 0], // Very subtle breathing/floating
+              scale: [1, 1.01, 1], 
+            }}
+            transition={{ 
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          >
+            <img 
+              src="/23P31A1285_processed.png" 
+              alt="Prasanth" 
+              style={{ 
+                width: '100%', 
+                height: 'auto', 
+                objectFit: 'cover'
+              }} 
+            />
+          </motion.div>
+
+          {/* FLOATING SKILL CARDS CONTAINER */}
+          <div className="cards-wrapper">
+            {/* Top Left (Move up/down) */}
+            <FloatingCard 
+              icon={Cpu} title="AI Engineer" desc="Building intelligent solutions for the future."
+              delay={0.1} top="-220px" left="-380px"
+              mousePosition={mousePosition}
+              floatPath={{ y: [-15, 15, -15] }}
+            />
+
+            {/* Top Right (Drift left/right) */}
+            <FloatingCard 
+              icon={Box} title="Problem Solver" desc="Turning complex problems into simple solutions."
+              delay={0.3} top="-150px" left="180px"
+              mousePosition={mousePosition}
+              floatPath={{ x: [-15, 15, -15] }}
+            />
+
+            {/* Bottom Left (Diagonal) */}
+            <FloatingCard 
+              icon={Code} title="Full Stack Developer" desc="Crafting seamless web experiences."
+              delay={0.5} top="120px" left="-400px"
+              mousePosition={mousePosition}
+              floatPath={{ x: [-10, 10, -10], y: [-10, 10, -10] }}
+            />
+
+            {/* Bottom Right (Circular) */}
+            <FloatingCard 
+              icon={Rocket} title="Always Learning" desc="Exploring new tech and building everyday."
+              delay={0.7} top="180px" left="150px"
+              mousePosition={mousePosition}
+              floatPath={{ 
+                x: [0, 15, 0, -15, 0], 
+                y: [15, 0, -15, 0, 15], 
+                rotate: [0, 2, 0, -2, 0] 
+              }}
+            />
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+}
