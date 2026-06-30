@@ -1278,6 +1278,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .nav-btn {
+  position: relative;
   background: transparent;
   border: none;
   color: var(--text-secondary);
@@ -2710,18 +2711,5 @@ body, a, button, .ai-quick-action-card, .project-card, .tech-node, .nav-btn, .fo
 .nav-btn {
   position: relative;
 }
-.nav-btn::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 50%;
-  width: 0;
-  height: 2px;
-  background: rgba(255, 255, 255, 0.8);
-  border-radius: 1px;
-  transition: width 0.3s ease-out, transform 0.3s ease-out;
-  transform: translateX(-50%);
-}
-.nav-btn.active::after {
-  width: 16px;
-}
+
+

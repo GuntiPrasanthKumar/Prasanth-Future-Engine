@@ -1,9 +1,8 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { m, LazyMotion, domMax, useInView  } from 'framer-motion';
+import { m, LazyMotion, domMax, useInView, AnimatePresence } from 'framer-motion';
 import { Canvas } from '@react-three/fiber';
 import { Home, User, Briefcase, Code, Mail, Trophy } from 'lucide-react';
 import Scene from './components/Scene';
-import AICore from './components/AICore';
 import Hero from './components/Hero';
 import About from './components/About';
 import Projects from './components/Projects';
@@ -12,13 +11,14 @@ import Achievements from './components/Achievements';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import CustomCursor from './components/CustomCursor';
+import Startup from './components/Startup';
 
 // Custom easing function (easeInOutQuad)
 const easeInOut = (t) => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
 
 function App() {
+  const [showStartup, setShowStartup] = useState(() => !sessionStorage.getItem('startupShown'));
   const [activeTab, setActiveTab] = useState('home');
-  const [coreArrivedAt, setCoreArrivedAt] = useState('home');
   const [isFocusShifting, setIsFocusShifting] = useState(false);
   const scrollRafRef = useRef(null);
   const isScrollingRef = useRef(false);
@@ -31,7 +31,7 @@ function App() {
     }
   }, []);
 
-  // Listen for manual interruptions
+  // Listen for manual interruptions and update active tab on scroll
   useEffect(() => {
     const handleInterrupt = () => cancelScroll();
     window.addEventListener('wheel', handleInterrupt, { passive: true });
@@ -42,16 +42,47 @@ function App() {
       }
     }, { passive: true });
     
+    let scrollTimeout;
+    const handleScroll = () => {
+      if (isScrollingRef.current) return;
+      if (scrollTimeout) cancelAnimationFrame(scrollTimeout);
+      scrollTimeout = requestAnimationFrame(() => {
+        const sections = ['home', 'about', 'projects', 'skills', 'achievements', 'contact'];
+        let closest = null;
+        let minDistance = Infinity;
+        const viewportCenter = window.innerHeight * 0.4;
+        
+        sections.forEach(tab => {
+          const el = document.getElementById(`ai-core-dock-${tab}`);
+          if (el) {
+            const rect = el.getBoundingClientRect();
+            const distance = Math.abs(rect.top - viewportCenter);
+            if (distance < minDistance) {
+              minDistance = distance;
+              closest = tab;
+            }
+          }
+        });
+        
+        if (closest) {
+          setActiveTab(prev => (prev !== closest ? closest : prev));
+        }
+      });
+    };
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
     return () => {
       window.removeEventListener('wheel', handleInterrupt);
       window.removeEventListener('touchstart', handleInterrupt);
       window.removeEventListener('keydown', handleInterrupt);
+      window.removeEventListener('scroll', handleScroll);
+      if (scrollTimeout) cancelAnimationFrame(scrollTimeout);
     };
   }, [cancelScroll]);
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
-    setCoreArrivedAt(null);
     cancelScroll(); // Cancel any ongoing programmatic scroll
     
     // Wait 120ms before starting the transition
@@ -114,7 +145,16 @@ function App() {
   return (
     <LazyMotion features={domMax}>
     <>
-      <CustomCursor />
+      {showStartup ? (
+        <Startup 
+          onComplete={() => {
+            sessionStorage.setItem('startupShown', 'true');
+            setShowStartup(false);
+          }} 
+        />
+      ) : (
+      <>
+        <CustomCursor />
       <div id="canvas-container">
         <Canvas camera={{ position: [0, 0, 8], fov: 60 }}>
           <Scene />
@@ -123,7 +163,6 @@ function App() {
 
       <div className="overlay">
         {/* Subtle top gradient and logo to fill free space */}
-        <AICore activeTab={activeTab} onArrive={setCoreArrivedAt} />
         <div id="ai-core-dock-home" style={{ position: 'absolute', top: '5vh', left: '50vw' }} />
         <div className="top-gradient"></div>
         <div style={{ position: 'absolute', top: '2rem', left: '5vw', zIndex: 10 }}>
@@ -133,29 +172,28 @@ function App() {
         <m.div
           animate={{
             opacity: isFocusShifting ? 0.97 : 1,
-            scale: isFocusShifting ? 0.997 : 1,
-            filter: isFocusShifting ? 'blur(1.2px)' : 'blur(0px)'
+            scale: isFocusShifting ? 0.997 : 1
           }}
           transition={{ duration: 0.18, ease: "easeInOut" }}
         >
           <div className={activeTab === 'home' ? '' : 'hidden-section'}>
-            <Hero isCoreArrived={coreArrivedAt === 'home'} />
+            <Hero />
           </div>
           
           <div className={activeTab === 'about' ? '' : 'hidden-section'}>
-            <About isCoreArrived={coreArrivedAt === 'about'} />
+            <About />
           </div>
           <div className={activeTab === 'projects' ? '' : 'hidden-section'}>
-            <Projects isCoreArrived={coreArrivedAt === 'projects'} />
+            <Projects />
           </div>
           <div className={activeTab === 'skills' ? '' : 'hidden-section'}>
-            <Skills isCoreArrived={coreArrivedAt === 'skills'} />
+            <Skills />
           </div>
           <div className={activeTab === 'achievements' ? '' : 'hidden-section'}>
-            <Achievements isCoreArrived={coreArrivedAt === 'achievements'} />
+            <Achievements />
           </div>
           <div className={activeTab === 'contact' ? '' : 'hidden-section'}>
-            <Contact isCoreArrived={coreArrivedAt === 'contact'} />
+            <Contact />
           </div>
         </m.div>
 
@@ -171,54 +209,60 @@ function App() {
           }}
           transition={{ duration: 0.3, ease: "easeOut" }}
         >
-          <button 
-            className={`nav-btn ${activeTab === 'home' ? 'active' : ''}`}
-            onClick={() => handleTabChange('home')}
-            title="Home"
-          >
-            <Home size={20} />
-          </button>
-          <button 
-            className={`nav-btn ${activeTab === 'about' ? 'active' : ''}`}
-            onClick={() => handleTabChange('about')}
-            title="About"
-          >
-            <User size={20} />
-          </button>
-          <button 
-            className={`nav-btn ${activeTab === 'projects' ? 'active' : ''}`}
-            onClick={() => handleTabChange('projects')}
-            title="Projects"
-          >
-            <Briefcase size={20} />
-          </button>
-          <button 
-            className={`nav-btn ${activeTab === 'skills' ? 'active' : ''}`}
-            onClick={() => handleTabChange('skills')}
-            title="Skills"
-          >
-            <Code size={20} />
-          </button>
-          <button 
-            className={`nav-btn ${activeTab === 'achievements' ? 'active' : ''}`}
-            onClick={() => handleTabChange('achievements')}
-            title="Achievements"
-          >
-            <Trophy size={20} />
-          </button>
-          <button 
-            className={`nav-btn ${activeTab === 'contact' ? 'active' : ''}`}
-            onClick={() => handleTabChange('contact')}
-            title="Contact"
-          >
-            <Mail size={20} />
-          </button>
+          {['home', 'about', 'projects', 'skills', 'achievements', 'contact'].map((tab) => {
+            const icons = {
+              home: Home,
+              about: User,
+              projects: Briefcase,
+              skills: Code,
+              achievements: Trophy,
+              contact: Mail
+            };
+            const Icon = icons[tab];
+            const titles = {
+              home: "Home",
+              about: "About",
+              projects: "Projects",
+              skills: "Skills",
+              achievements: "Achievements",
+              contact: "Contact"
+            };
+            return (
+              <button 
+                key={tab}
+                className={`nav-btn ${activeTab === tab ? 'active' : ''}`}
+                onClick={() => handleTabChange(tab)}
+                title={titles[tab]}
+                style={{ position: 'relative' }}
+              >
+                <Icon size={20} />
+                {activeTab === tab && (
+                  <m.div
+                    layoutId="activeNavIndicator"
+                    style={{
+                      position: "absolute",
+                      bottom: "-2px",
+                      left: "30%",
+                      width: "40%",
+                      height: "2px",
+                      background: "rgba(255, 255, 255, 0.9)",
+                      borderRadius: "2px",
+                      zIndex: -1
+                    }}
+                    transition={{ duration: 0.28, ease: "easeInOut" }}
+                  />
+                )}
+              </button>
+            );
+          })}
         </m.nav>
 
         <div ref={footerRef}>
-          <Footer isCoreArrived={coreArrivedAt === 'footer'} />
+          <Footer />
         </div>
       </div>
+      </>
+      )}
     </>
     </LazyMotion>
   );

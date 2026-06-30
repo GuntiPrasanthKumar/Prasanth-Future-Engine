@@ -78,6 +78,7 @@ const cardsContainerVariants = {
   }
 };
 
+const timelineData = [1, 2, 3, 4];
 
 const Achievements = ({ isCoreArrived }) => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
