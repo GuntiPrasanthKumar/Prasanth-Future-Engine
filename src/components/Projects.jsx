@@ -1,6 +1,37 @@
 import { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, ExternalLink, Code } from 'lucide-react';
+
+const headingVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+};
+const contentVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+};
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.08 } }
+};
+const cardVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+};
+const glassVariants = {
+  hidden: { opacity: 0, scale: 0.98 },
+  visible: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: "easeOut" } }
+};
+const sectionRevealVariants = {
+  hidden: { opacity: 0 },
+  visible: { 
+    opacity: 1,
+    transition: { 
+      when: "beforeChildren",
+      staggerChildren: 0.1
+    }
+  }
+};
 
 const projects = [
   {
@@ -35,7 +66,7 @@ const swipePower = (offset, velocity) => {
   return Math.abs(offset) * velocity;
 };
 
-export default function Projects() {
+export default function Projects({ isCoreArrived }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
@@ -60,29 +91,29 @@ export default function Projects() {
   }, []);
 
   return (
-    <section className="section" style={{ height: '100vh', overflow: 'hidden', padding: '0 5vw' }}>
+    <m.section className="section" style={{ height: '100vh', overflow: 'hidden', padding: '0 5vw' }} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.25 }} variants={sectionRevealVariants}>
       <div className="projects-layout">
         
         {/* LEFT COLUMN: Controls & Info */}
         <div className="projects-left">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
+          <div id="ai-core-dock-projects" style={{ position: 'absolute', top: '20%', right: '40%', width: 22, height: 22 }} />
+          <m.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.25 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
               <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#fff' }} />
               <span style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '2px', color: 'var(--text-secondary)' }}>Portfolio</span>
             </div>
             
-            <h2 style={{ fontSize: '4rem', lineHeight: '1.1', marginBottom: '1rem', fontWeight: 800, letterSpacing: '-2px' }}>
+            <m.h2 variants={headingVariants} style={{ fontSize: '4rem', lineHeight: '1.1', marginBottom: '1rem', fontWeight: 800, letterSpacing: '-2px' }}>
               Selected<br/>Works
-            </h2>
+            </m.h2>
             
-            <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', marginBottom: '2rem' }}>
+            <m.p variants={contentVariants} style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', marginBottom: '2rem' }}>
               Drag, swipe, or click to explore my latest creations.
-            </p>
+            </m.p>
 
             <div className="projects-indicator">
               0{currentIndex + 1} <span style={{ color: 'rgba(255,255,255,0.3)' }}>/ 0{projects.length}</span>
@@ -103,7 +134,7 @@ export default function Projects() {
                 <ChevronRight size={24} />
               </button>
             </div>
-          </motion.div>
+          </m.div>
         </div>
 
         {/* RIGHT COLUMN: Cover Flow Carousel */}
@@ -112,18 +143,17 @@ export default function Projects() {
             className="coverflow-container"
             style={{
               transform: `translate3d(${mousePos.x}px, ${mousePos.y}px, 0)`
-            }}
-          >
-            <AnimatePresence initial={false}>
+            }}>
+            <AnimatePresence>
               {projects.map((project, i) => {
                 // Calculate relative position
                 let relativeIndex = i - currentIndex;
                 // Handle wrapping for infinite feel
-                if (relativeIndex > 1) relativeIndex -= projects.length;
+                if (relativeIndex> 1) relativeIndex -= projects.length;
                 if (relativeIndex < -1) relativeIndex += projects.length;
 
                 // We only render active, previous, and next to save performance
-                if (Math.abs(relativeIndex) > 1) return null;
+                if (Math.abs(relativeIndex)> 1) return null;
 
                 const isActive = relativeIndex === 0;
                 const isLeft = relativeIndex === -1;
@@ -138,9 +168,11 @@ export default function Projects() {
                 let filter = isActive ? 'blur(0px)' : 'blur(4px)';
 
                 return (
-                  <motion.div
+                  <m.div
                     key={i}
                     className="coverflow-card"
+                    data-cursor={isActive ? "project" : undefined}
+                    whileTap={isActive ? { scale: 0.98, transition: { duration: 0.14, ease: "easeOut" } } : {}}
                     drag={isActive ? "x" : false}
                     dragConstraints={{ left: 0, right: 0 }}
                     dragElastic={0.2}
@@ -149,7 +181,7 @@ export default function Projects() {
                       const swipe = swipePower(offset.x, velocity.x);
                       if (swipe < -swipeConfidenceThreshold) {
                         nextProject();
-                      } else if (swipe > swipeConfidenceThreshold) {
+                      } else if (swipe> swipeConfidenceThreshold) {
                         prevProject();
                       }
                     }}
@@ -157,29 +189,15 @@ export default function Projects() {
                       if (isLeft) prevProject();
                       if (isRight) nextProject();
                     }}
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ 
-                      x, 
-                      scale, 
-                      rotateY, 
-                      zIndex, 
-                      opacity, 
-                      filter 
-                    }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 300,
-                      damping: 30,
-                      mass: 1
-                    }}
+                    animate={{ zIndex, scale, rotateY, x, opacity, filter }}
+                    transition={{ type: 'spring', stiffness: 200, damping: 20 }}
                     style={{
                       cursor: isActive ? 'grab' : 'pointer',
-                      boxShadow: isActive ? '0 30px 60px rgba(0,0,0,0.8), 0 0 40px rgba(255,255,255,0.1)' : '0 10px 30px rgba(0,0,0,0.5)'
+                      boxShadow: isActive ? 'var(--shadow-md)' : '0 10px 30px rgba(0,0,0,0.5)'
                     }}
-                    whileHover={isActive ? { y: -10, boxShadow: '0 40px 80px rgba(0,0,0,0.9), 0 0 60px rgba(255,255,255,0.2)' } : {}}
-                  >
+                    whileHover={isActive ? { y: -6, backgroundColor: 'var(--glass-bg-hover)', borderColor: 'var(--glass-border-hover)', boxShadow: 'var(--shadow-lg)', transition: { duration: 0.22, ease: "easeOut" } } : {}}>
                     <div className="coverflow-img-wrapper">
-                      <img src={project.img} alt={project.title} className="coverflow-img" />
+                      <img loading="lazy" decoding="async" src={project.img} alt={project.title} className="coverflow-img" />
                     </div>
                     <div className="coverflow-content">
                       <div>
@@ -194,7 +212,7 @@ export default function Projects() {
                         <button className="action-btn"><Code size={18} /></button>
                       </div>
                     </div>
-                  </motion.div>
+                  </m.div>
                 );
               })}
             </AnimatePresence>
@@ -212,15 +230,13 @@ export default function Projects() {
                   boxShadow: currentIndex === i ? '0 0 15px rgba(255,255,255,0.8)' : 'none',
                   cursor: 'pointer', transition: 'all 0.3s ease', opacity: currentIndex === i ? 1 : 0.5,
                   padding: 0, background: 'transparent'
-                }}
-              >
-                <img src={p.img} alt={`thumb-${i}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                }}>
+                <img loading="lazy" decoding="async" src={p.img} alt={`thumb-${i}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </button>
             ))}
           </div>
         </div>
-
       </div>
-    </section>
+    </m.section>
   );
 }

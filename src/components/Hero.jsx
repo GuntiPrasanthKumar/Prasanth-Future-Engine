@@ -1,9 +1,9 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 
 export default function Hero() {
   return (
     <section className="section hero" style={{ alignItems: 'center', justifyContent: 'center' }}>
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, delay: 0.2 }}
@@ -25,8 +25,8 @@ export default function Hero() {
             background: 'rgba(255,255,255,0.1)', 
             border: '1px solid rgba(255,255,255,0.2)', 
             color: 'white', 
-            padding: '1rem 2rem', 
-            borderRadius: '12px',
+            padding: 'var(--space-2) var(--space-4)', 
+            borderRadius: 'var(--radius-sm)',
             fontSize: '1rem',
             cursor: 'pointer',
             backdropFilter: 'blur(10px)'
@@ -36,7 +36,7 @@ export default function Hero() {
             background: 'transparent', 
             border: 'none', 
             color: 'var(--text-secondary)', 
-            padding: '1rem 2rem', 
+            padding: 'var(--space-2) var(--space-4)', 
             fontSize: '1rem',
             cursor: 'pointer',
             textDecoration: 'none',
@@ -44,7 +44,7 @@ export default function Hero() {
             alignItems: 'center'
           }}>Download Resume</a>
         </div>
-      </motion.div>
+      </m.div>
     </section>
   );
 }

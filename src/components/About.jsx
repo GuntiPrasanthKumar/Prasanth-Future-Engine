@@ -1,6 +1,37 @@
 import { useState, useEffect, useMemo } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Cpu, Box, Code, Rocket } from 'lucide-react';
+
+const headingVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+};
+const contentVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+};
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.08 } }
+};
+const cardVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+};
+const glassVariants = {
+  hidden: { opacity: 0, scale: 0.98 },
+  visible: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: "easeOut" } }
+};
+const sectionRevealVariants = {
+  hidden: { opacity: 0 },
+  visible: { 
+    opacity: 1,
+    transition: { 
+      when: "beforeChildren",
+      staggerChildren: 0.1
+    }
+  }
+};
 
 // Reusable animated floating card
 const FloatingCard = ({ icon: Icon, title, desc, delay, top, left, right, bottom, floatPath, mousePosition }) => {
@@ -9,35 +40,26 @@ const FloatingCard = ({ icon: Icon, title, desc, delay, top, left, right, bottom
   const tiltY = mousePosition.x * -10;
 
   return (
-    <motion.div
+    <m.div
       className="floating-glass-card"
       style={{ top, left, right, bottom, zIndex: 20 }}
-      initial={{ opacity: 0, scale: 0.9, y: 20 }}
-      animate={{ 
-        opacity: 1, 
-        scale: 1, 
-        y: 0,
+      animate={{
+        ...floatPath,
         rotateX: tiltX,
-        rotateY: tiltY
+        rotateY: tiltY,
       }}
-      transition={{ 
-        opacity: { duration: 0.8, delay, ease: 'easeOut' },
-        scale: { duration: 0.8, delay, ease: 'easeOut' },
-        y: { duration: 0.8, delay, ease: 'easeOut' },
+      transition={{
+        repeat: Infinity,
+        repeatType: 'mirror',
+        duration: 4,
+        ease: 'easeInOut',
+        scale: { duration: 0.5, delay, ease: 'easeOut' },
+        y: { duration: 0.5, delay, ease: 'easeOut' },
         rotateX: { type: 'spring', stiffness: 50, damping: 20 },
         rotateY: { type: 'spring', stiffness: 50, damping: 20 }
-      }}
-    >
-      <motion.div
-        style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}
-        animate={floatPath}
-        transition={{
-          duration: Math.random() * 4 + 6, // 6-10 seconds
-          repeat: Infinity,
-          repeatType: "mirror",
-          ease: "easeInOut"
-        }}
-      >
+      }}>
+      <m.div
+        style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
         <div className="card-icon">
           <Icon size={24} />
         </div>
@@ -45,12 +67,12 @@ const FloatingCard = ({ icon: Icon, title, desc, delay, top, left, right, bottom
           <h4 className="card-title">{title}</h4>
           <p className="card-desc">{desc}</p>
         </div>
-      </motion.div>
-    </motion.div>
+      </m.div>
+    </m.div>
   );
 };
 
-export default function About() {
+export default function About({ isCoreArrived }) {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
@@ -86,36 +108,37 @@ export default function About() {
   }, []);
 
   return (
-    <section className="section" style={{ height: '100vh', overflow: 'hidden', padding: '0 5vw' }}>
+    <m.section className="section" style={{ height: '100vh', overflow: 'hidden', padding: '0 5vw' }} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.25 }} variants={sectionRevealVariants}>
       <div className="about-layout">
+        <div id="ai-core-dock-about" style={{ position: 'absolute', top: '20%', left: '10%', width: 22, height: 22 }} />
         
         {/* LEFT COLUMN: TIMELINE */}
         <div className="timeline-section">
           <div className="timeline-group">
             <h2 className="timeline-header">Background</h2>
-            <div className="timeline-item">
+            <m.div variants={cardVariants}   className="timeline-item">
               <div className="timeline-dot" />
               <div className="timeline-date">2023 - 2027</div>
               <h3 className="timeline-title">B.Tech in Information Technology</h3>
               <p className="timeline-inst">Aditya College of Engineering and Technology</p>
-            </div>
-            <div className="timeline-item">
+            </m.div>
+            <m.div variants={cardVariants}   className="timeline-item">
               <div className="timeline-dot" />
               <div className="timeline-date">2021 - 2023</div>
               <h3 className="timeline-title">Intermediate (MPC)</h3>
               <p className="timeline-inst">Pragathi Junior College</p>
-            </div>
-            <div className="timeline-item">
+            </m.div>
+            <m.div variants={cardVariants}   className="timeline-item">
               <div className="timeline-dot" />
               <div className="timeline-date">2016 - 2021</div>
               <h3 className="timeline-title">High School</h3>
               <p className="timeline-inst">Zilla Parishadh High School</p>
-            </div>
+            </m.div>
           </div>
 
           <div className="timeline-group">
             <h2 className="timeline-header">Experience</h2>
-            <div className="timeline-item">
+            <m.div variants={cardVariants}   className="timeline-item">
               <div className="timeline-dot" />
               <div className="timeline-date">MAY 2025 - JUN 2025</div>
               <h3 className="timeline-title">Software Development Intern</h3>
@@ -123,7 +146,7 @@ export default function About() {
               <p className="timeline-inst" style={{ marginTop: '0.8rem', opacity: 0.8 }}>
                 Built responsive UI modules, supported backend maintained code using Git/GitHub.
               </p>
-            </div>
+            </m.div>
           </div>
         </div>
 
@@ -131,7 +154,7 @@ export default function About() {
         <div className="portrait-section" style={{ perspective: '1000px' }}>
           
           {/* Deep Radial Background Glow */}
-          <motion.div style={{
+          <m.div style={{
             position: 'absolute',
             top: '50%', left: '50%',
             width: '800px', height: '800px',
@@ -144,20 +167,17 @@ export default function About() {
           {/* Premium Animated SVG Rings - Perfectly Centered */}
           <div style={{ position: 'absolute', top: '50%', left: '50%', width: 0, height: 0, zIndex: 1, pointerEvents: 'none' }}>
             {/* Outer dotted ring */}
-            <motion.svg viewBox="0 0 100 100" style={{ position: 'absolute', top: '-350px', left: '-350px', width: '700px', height: '700px', opacity: 0.5, filter: 'drop-shadow(0 0 5px rgba(255,255,255,0.8)) drop-shadow(0 0 10px rgba(255,255,255,0.4))' }}
-              animate={{ rotate: 360 }} transition={{ duration: 250, repeat: Infinity, ease: "linear" }}>
+            <m.svg viewBox="0 0 100 100" style={{ position: 'absolute', top: '-350px', left: '-350px', width: '700px', height: '700px', opacity: 0.5, filter: 'drop-shadow(0 0 5px rgba(255,255,255,0.8)) drop-shadow(0 0 10px rgba(255,255,255,0.4))' }}>
               <circle cx="50" cy="50" r="48" fill="none" stroke="#fff" strokeWidth="0.15" strokeDasharray="1 3" />
-            </motion.svg>
+            </m.svg>
             {/* Middle segmented ring */}
-            <motion.svg viewBox="0 0 100 100" style={{ position: 'absolute', top: '-300px', left: '-300px', width: '600px', height: '600px', opacity: 0.6, filter: 'drop-shadow(0 0 6px rgba(255,255,255,0.8)) drop-shadow(0 0 15px rgba(255,255,255,0.4))' }}
-              animate={{ rotate: -360 }} transition={{ duration: 200, repeat: Infinity, ease: "linear" }}>
+            <m.svg viewBox="0 0 100 100" style={{ position: 'absolute', top: '-300px', left: '-300px', width: '600px', height: '600px', opacity: 0.6, filter: 'drop-shadow(0 0 6px rgba(255,255,255,0.8)) drop-shadow(0 0 15px rgba(255,255,255,0.4))' }}>
               <circle cx="50" cy="50" r="45" fill="none" stroke="#fff" strokeWidth="0.2" strokeDasharray="20 10 5 10" />
-            </motion.svg>
+            </m.svg>
             {/* Inner faint ring */}
-            <motion.svg viewBox="0 0 100 100" style={{ position: 'absolute', top: '-200px', left: '-200px', width: '400px', height: '400px', opacity: 0.7, filter: 'drop-shadow(0 0 8px rgba(255,255,255,0.8)) drop-shadow(0 0 20px rgba(255,255,255,0.4))' }}
-              animate={{ rotate: 360 }} transition={{ duration: 180, repeat: Infinity, ease: "linear" }}>
+            <m.svg viewBox="0 0 100 100" style={{ position: 'absolute', top: '-200px', left: '-200px', width: '400px', height: '400px', opacity: 0.7, filter: 'drop-shadow(0 0 8px rgba(255,255,255,0.8)) drop-shadow(0 0 20px rgba(255,255,255,0.4))' }}>
               <circle cx="50" cy="50" r="40" fill="none" stroke="#fff" strokeWidth="0.1" />
-            </motion.svg>
+            </m.svg>
           </div>
           
           {/* Almost Invisible Platform (Centered under portrait) */}
@@ -179,7 +199,7 @@ export default function About() {
           {/* Particle Field */}
           <div style={{ position: 'absolute', inset: -150, zIndex: 2, pointerEvents: 'none' }}>
             {particles.map((p, i) => (
-              <motion.div
+              <m.div
                 key={i}
                 className="particle"
                 style={{ 
@@ -187,18 +207,14 @@ export default function About() {
                   filter: `blur(${p.blur}px)`, opacity: p.opacity,
                   boxShadow: p.type === 'star' ? '0 0 15px rgba(255,255,255,1), 0 0 30px rgba(255,255,255,1), 0 0 60px rgba(255,255,255,0.8)' : '0 0 20px rgba(255,255,255,0.4)'
                 }}
-                animate={{ 
-                  y: [0, -40, 0], 
-                  x: [0, (Math.random() - 0.5) * 20, 0],
-                  opacity: [p.opacity * 0.5, p.opacity, p.opacity * 0.5] 
-                }}
-                transition={{ duration: p.duration, delay: p.delay, repeat: Infinity, ease: 'easeInOut' }}
+                
+                
               />
             ))}
           </div>
 
           {/* Floating Portrait with Mask & Glow */}
-          <motion.div 
+          <m.div 
             className="portrait-image-wrapper"
             style={{ 
               position: 'relative', 
@@ -206,18 +222,8 @@ export default function About() {
               width: '400px',
               x: mousePosition.x * 10, // Subtle Mouse Parallax
               y: mousePosition.y * 10,
-            }}
-            animate={{ 
-              y: [0, -10, 0], // Very subtle breathing/floating
-              scale: [1, 1.01, 1], 
-            }}
-            transition={{ 
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          >
-            <img 
+            }}>
+            <img loading="lazy" decoding="async" 
               src="/23P31A1285_processed.png" 
               alt="Prasanth" 
               style={{ 
@@ -226,7 +232,7 @@ export default function About() {
                 objectFit: 'cover'
               }} 
             />
-          </motion.div>
+          </m.div>
 
           {/* FLOATING SKILL CARDS CONTAINER */}
           <div className="cards-wrapper">
@@ -269,6 +275,6 @@ export default function About() {
 
         </div>
       </div>
-    </section>
+    </m.section>
   );
 }
