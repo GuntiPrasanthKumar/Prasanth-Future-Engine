@@ -2712,4 +2712,41 @@ body, a, button, .ai-quick-action-card, .project-card, .tech-node, .nav-btn, .fo
   position: relative;
 }
 
+/* Certificate Modal Buttons */
+.modal-primary-btn, .modal-secondary-btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+}
+
+.modal-primary-btn {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  border: none;
+}
+
+.modal-primary-btn:hover {
+  background: var(--text-secondary);
+  transform: translateY(-2px);
+}
+
+.modal-secondary-btn {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+}
+
+.modal-secondary-btn:hover {
+  background: var(--glass-bg-hover);
+  color: var(--text-primary);
+  border-color: var(--text-secondary);
+  transform: translateY(-2px);
+}
+
+
 
