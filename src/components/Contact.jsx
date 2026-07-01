@@ -67,7 +67,7 @@ const Contact = ({ isCoreArrived }) => {
   const quickActions = [
     {
       id: "hiring",
-      icon: "🎯",
+      icon: "",
       title: "I'm Hiring",
       desc: "Looking for an AI Engineer or Software Developer.",
       aiPart1: "Excellent. Hiring communication channel established.",
@@ -77,7 +77,7 @@ const Contact = ({ isCoreArrived }) => {
     },
     {
       id: "project",
-      icon: "🚀",
+      icon: "",
       title: "I Have a Project",
       desc: "Let's build something amazing together.",
       aiPart1: "Project detected. I'd love to hear more.",
@@ -87,7 +87,7 @@ const Contact = ({ isCoreArrived }) => {
     },
     {
       id: "collab",
-      icon: "🤝",
+      icon: "",
       title: "Let's Collaborate",
       desc: "Open source, startup or research collaboration.",
       aiPart1: "Collaboration request received. I'm ready.",
@@ -97,7 +97,7 @@ const Contact = ({ isCoreArrived }) => {
     },
     {
       id: "intern",
-      icon: "🎓",
+      icon: "",
       title: "Internship Opportunity",
       desc: "Discuss internships or research opportunities.",
       aiPart1: "Internship opportunity received. I'm ready.",
@@ -107,7 +107,7 @@ const Contact = ({ isCoreArrived }) => {
     },
     {
       id: "idea",
-      icon: "💡",
+      icon: "",
       title: "I Have an Idea",
       desc: "Share an idea or product concept.",
       aiPart1: "Creativity detected. I'm listening.",
@@ -117,10 +117,10 @@ const Contact = ({ isCoreArrived }) => {
     },
     {
       id: "hello",
-      icon: "💬",
+      icon: "",
       title: "Just Say Hello",
       desc: "No agenda. Just start a conversation.",
-      aiPart1: "Hello 👋",
+      aiPart1: "Hello ",
       aiPart2: "Feel free to tell me anything.",
       placeholder: "Type your message...",
       buttonText: "Send Message"
