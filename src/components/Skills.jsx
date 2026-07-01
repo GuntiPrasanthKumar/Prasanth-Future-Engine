@@ -1,6 +1,6 @@
 import { memo,  useState, useEffect, useRef } from 'react';
 import { m, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { Code2, Server, Terminal, Coffee, Zap, Database, GitBranch, Cloud, ExternalLink, Calendar, Briefcase, BarChart2 } from 'lucide-react';
+import { Code2, Server, Terminal, Coffee, Zap, Database, GitBranch, Cloud, ExternalLink, Calendar, Briefcase, BarChart2, Globe, Layout, Layers, Box, Cpu, Network, Workflow } from 'lucide-react';
 
 const headingVariants = {
   hidden: { opacity: 0, y: 24 },
@@ -50,6 +50,57 @@ const technologies = [
     experience: '2+ Years', projects: '5+ Projects', proficiency: 75, techUsed: ['Spring Boot', 'JPA', 'Maven', 'JUnit'], desc: 'A high-level, class-based, object-oriented programming language designed to have as few implementation dependencies as possible.' },
   { id: 8, name: 'Python', subtitle: 'Programming Language', icon: <Terminal color="#3776AB" />,
     experience: '3+ Years', projects: '10+ Projects', proficiency: 90, techUsed: ['Pandas', 'NumPy', 'Scikit-Learn', 'Flask'], desc: 'An interpreted, high-level, general-purpose programming language heavily used in AI and data science.' },
+];
+
+const mobileModules = [
+  {
+    title: "MODULE_01 // Frontend",
+    direction: "left",
+    techs: [
+      { name: "React", icon: <Code2 size={18} /> },
+      { name: "Next.js", icon: <Globe size={18} /> },
+      { name: "Tailwind", icon: <Layout size={18} /> },
+      { name: "Framer Motion", icon: <Layers size={18} /> },
+      { name: "JavaScript", icon: <Code2 size={18} /> },
+      { name: "TypeScript", icon: <Code2 size={18} /> },
+    ]
+  },
+  {
+    title: "MODULE_02 // Backend",
+    direction: "right",
+    techs: [
+      { name: "Node.js", icon: <Server size={18} /> },
+      { name: "FastAPI", icon: <Zap size={18} /> },
+      { name: "Java", icon: <Coffee size={18} /> },
+      { name: "Express", icon: <Server size={18} /> },
+      { name: "REST APIs", icon: <Cloud size={18} /> },
+      { name: "GraphQL", icon: <Network size={18} /> },
+    ]
+  },
+  {
+    title: "MODULE_03 // AI / ML",
+    direction: "left",
+    techs: [
+      { name: "Python", icon: <Terminal size={18} /> },
+      { name: "TensorFlow", icon: <Cpu size={18} /> },
+      { name: "PyTorch", icon: <Cpu size={18} /> },
+      { name: "Pandas", icon: <Database size={18} /> },
+      { name: "Scikit-Learn", icon: <Workflow size={18} /> },
+      { name: "OpenCV", icon: <Globe size={18} /> },
+    ]
+  },
+  {
+    title: "MODULE_04 // Tools",
+    direction: "right",
+    techs: [
+      { name: "Git", icon: <GitBranch size={18} /> },
+      { name: "Docker", icon: <Box size={18} /> },
+      { name: "AWS", icon: <Cloud size={18} /> },
+      { name: "MongoDB", icon: <Database size={18} /> },
+      { name: "PostgreSQL", icon: <Database size={18} /> },
+      { name: "Postman", icon: <Cloud size={18} /> },
+    ]
+  }
 ];
 
 function SettingsIcon({ color }) {
@@ -167,6 +218,43 @@ const TechNode = ({ tech, index, selectedNode, cardVisibleId, radius, onSelect, 
       </m.div>
 
     </>
+  );
+};
+
+const TechList = ({ techs }) => (
+  <div style={{ display: 'flex', gap: '1rem', paddingRight: '1rem' }}>
+    {techs.map((tech, i) => (
+      <div key={i} className="marquee-card">
+        {tech.icon}
+        <span>{tech.name}</span>
+      </div>
+    ))}
+    {/* Duplicate list in same container for seamless width extension */}
+    {techs.map((tech, i) => (
+      <div key={`dup-${i}`} className="marquee-card">
+        {tech.icon}
+        <span>{tech.name}</span>
+      </div>
+    ))}
+  </div>
+);
+
+const MobileTechMarquee = () => {
+  return (
+    <div className="mobile-tech-modules desktop-hidden">
+      {mobileModules.map((module, idx) => (
+        <div key={idx} className="tech-module">
+          <div className="tech-module-title">{module.title}</div>
+          <div className="marquee-container">
+            <div className={`marquee-track ${module.direction}`}>
+              {/* Render two exact halves to make CSS transform from 0 to -50% perfectly seamless */}
+              <TechList techs={module.techs} />
+              <TechList techs={module.techs} />
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
   );
 };
 
@@ -569,6 +657,8 @@ const Skills = ({ isCoreArrived }) => {
             
           </div>
           
+          <MobileTechMarquee />
+
         </div>
       </div>
     </m.section>

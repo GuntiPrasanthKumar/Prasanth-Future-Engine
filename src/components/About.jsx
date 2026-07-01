@@ -108,14 +108,35 @@ export default function About({ isCoreArrived }) {
   }, []);
 
   return (
-    <m.section className="section" style={{ height: '100vh', overflow: 'hidden', padding: '0 5vw' }} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.25 }} variants={sectionRevealVariants}>
+    <m.section className="section about-section" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.25 }} variants={sectionRevealVariants}>
       <div className="about-layout">
         <div id="ai-core-dock-about" style={{ position: 'absolute', top: '20%', left: '10%', width: 22, height: 22 }} />
         
         {/* LEFT COLUMN: TIMELINE */}
         <div className="timeline-section">
+          
+          <div className="timeline-group" style={{ marginBottom: '3rem' }}>
+            <h2 className="timeline-header">WHO I AM</h2>
+            <m.div variants={cardVariants} className="career-objective-card glass-card">
+              <p className="career-objective-text">
+                I am a passionate software developer and AI enthusiast dedicated to building intelligent solutions that solve complex, real-world problems.
+              </p>
+            </m.div>
+          </div>
+
+          <div className="timeline-group" style={{ marginBottom: '3rem' }}>
+            <h2 className="timeline-header">ENGINEERING VISION</h2>
+            <m.div variants={cardVariants} className="career-objective-card glass-card">
+              <p className="career-objective-text">
+                I don't just aspire to work in Artificial Intelligence—I aspire to <span className="highlight">engineer intelligent systems that create real impact</span>.
+                <br/><br/>
+                My mission is to build products where Artificial Intelligence, software engineering, and human-centered design come together to solve meaningful problems. I am committed to continuously learning, embracing challenging opportunities, and contributing to teams that are shaping the future through innovation, scalability, and engineering excellence.
+              </p>
+            </m.div>
+          </div>
+
           <div className="timeline-group">
-            <h2 className="timeline-header">Background</h2>
+            <h2 className="timeline-header">ACADEMIC JOURNEY</h2>
             <m.div variants={cardVariants}   className="timeline-item">
               <div className="timeline-dot" />
               <div className="timeline-date">2023 - 2027</div>
@@ -137,7 +158,7 @@ export default function About({ isCoreArrived }) {
           </div>
 
           <div className="timeline-group">
-            <h2 className="timeline-header">Experience</h2>
+            <h2 className="timeline-header">PROFESSIONAL EXPERIENCE</h2>
             <m.div variants={cardVariants}   className="timeline-item">
               <div className="timeline-dot" />
               <div className="timeline-date">MAY 2025 - JUN 2025</div>
@@ -148,11 +169,23 @@ export default function About({ isCoreArrived }) {
               </p>
             </m.div>
           </div>
+          
+          {/* CORE STRENGTHS (Integrated linearly) */}
+          <div className="timeline-group" style={{ marginTop: '1rem' }}>
+            <h2 className="timeline-header" style={{ marginBottom: '1rem' }}>CORE STRENGTHS</h2>
+            <div className="core-chips">
+              <span className="core-chip">AI Engineer</span>
+              <span className="core-chip">Problem Solver</span>
+              <span className="core-chip">Full Stack Developer</span>
+              <span className="core-chip">Always Learning</span>
+            </div>
+          </div>
         </div>
 
         {/* RIGHT COLUMN: PORTRAIT & CARDS */}
         <div className="portrait-section" style={{ perspective: '1000px' }}>
           
+          <div className="portrait-visuals">
           {/* Deep Radial Background Glow */}
           <m.div style={{
             position: 'absolute',
@@ -233,6 +266,9 @@ export default function About({ isCoreArrived }) {
               }} 
             />
           </m.div>
+          </div>
+
+
 
           {/* FLOATING SKILL CARDS CONTAINER */}
           <div className="cards-wrapper">
