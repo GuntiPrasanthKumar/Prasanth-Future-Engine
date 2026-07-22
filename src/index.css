@@ -675,11 +675,11 @@ h1, h2, h3, h4, h5, h6 {
 
 .tech-section {
   position: relative;
-  height: 100vh;
-  max-height: 100vh;
+  min-height: 110vh;
   width: 100%;
   background-color: #050505;
   padding: min(8vh, 80px) 80px;
+  padding-bottom: 15rem; /* Extra space for the desktop tech marquee */
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -814,6 +814,7 @@ h1, h2, h3, h4, h5, h6 {
 @media (max-width: 1024px) {
   .tech-section {
     padding: 100px 40px;
+    padding-bottom: 150px;
   }
   .tech-grid {
     grid-template-columns: 1fr;
@@ -822,6 +823,7 @@ h1, h2, h3, h4, h5, h6 {
 @media (max-width: 768px) {
   .tech-section {
     padding: 80px 20px;
+    padding-bottom: 120px;
   }
   .tech-heading {
     font-size: 2.5rem;
