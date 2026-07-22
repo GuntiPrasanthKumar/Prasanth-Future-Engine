@@ -57,48 +57,48 @@ const mobileModules = [
     title: "MODULE_01 // Frontend",
     direction: "left",
     techs: [
-      { name: "React", icon: <Code2 size={18} /> },
-      { name: "Next.js", icon: <Globe size={18} /> },
-      { name: "Tailwind", icon: <Layout size={18} /> },
-      { name: "Framer Motion", icon: <Layers size={18} /> },
-      { name: "JavaScript", icon: <Code2 size={18} /> },
-      { name: "TypeScript", icon: <Code2 size={18} /> },
+      { name: "React", icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" width={24} height={24} alt="React" /> },
+      { name: "Next.js", icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg" width={24} height={24} alt="Next.js" style={{filter: 'invert(1)'}} /> },
+      { name: "Tailwind", icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" width={24} height={24} alt="Tailwind" /> },
+      { name: "Framer Motion", icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/framer/framer-original.svg" width={24} height={24} alt="Framer Motion" style={{filter: 'invert(1)'}} /> },
+      { name: "JavaScript", icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" width={24} height={24} alt="JavaScript" /> },
+      { name: "TypeScript", icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg" width={24} height={24} alt="TypeScript" /> },
     ]
   },
   {
     title: "MODULE_02 // Backend",
     direction: "right",
     techs: [
-      { name: "Node.js", icon: <Server size={18} /> },
-      { name: "FastAPI", icon: <Zap size={18} /> },
-      { name: "Java", icon: <Coffee size={18} /> },
-      { name: "Express", icon: <Server size={18} /> },
-      { name: "REST APIs", icon: <Cloud size={18} /> },
-      { name: "GraphQL", icon: <Network size={18} /> },
+      { name: "Node.js", icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" width={24} height={24} alt="Node.js" /> },
+      { name: "FastAPI", icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fastapi/fastapi-original.svg" width={24} height={24} alt="FastAPI" /> },
+      { name: "Java", icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg" width={24} height={24} alt="Java" /> },
+      { name: "Express", icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/express/express-original.svg" width={24} height={24} alt="Express" style={{filter: 'invert(1)'}} /> },
+      { name: "REST APIs", icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/insomnia/insomnia-original.svg" width={24} height={24} alt="REST APIs" /> },
+      { name: "GraphQL", icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/graphql/graphql-plain.svg" width={24} height={24} alt="GraphQL" style={{filter: 'invert(1)'}} /> },
     ]
   },
   {
     title: "MODULE_03 // AI / ML",
     direction: "left",
     techs: [
-      { name: "Python", icon: <Terminal size={18} /> },
-      { name: "TensorFlow", icon: <Cpu size={18} /> },
-      { name: "PyTorch", icon: <Cpu size={18} /> },
-      { name: "Pandas", icon: <Database size={18} /> },
-      { name: "Scikit-Learn", icon: <Workflow size={18} /> },
-      { name: "OpenCV", icon: <Globe size={18} /> },
+      { name: "Python", icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" width={24} height={24} alt="Python" /> },
+      { name: "TensorFlow", icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tensorflow/tensorflow-original.svg" width={24} height={24} alt="TensorFlow" /> },
+      { name: "PyTorch", icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pytorch/pytorch-original.svg" width={24} height={24} alt="PyTorch" /> },
+      { name: "Pandas", icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pandas/pandas-original.svg" width={24} height={24} alt="Pandas" /> },
+      { name: "Scikit-Learn", icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/scikitlearn/scikitlearn-original.svg" width={24} height={24} alt="Scikit-Learn" /> },
+      { name: "OpenCV", icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/opencv/opencv-original.svg" width={24} height={24} alt="OpenCV" /> },
     ]
   },
   {
     title: "MODULE_04 // Tools",
     direction: "right",
     techs: [
-      { name: "Git", icon: <GitBranch size={18} /> },
-      { name: "Docker", icon: <Box size={18} /> },
-      { name: "AWS", icon: <Cloud size={18} /> },
-      { name: "MongoDB", icon: <Database size={18} /> },
-      { name: "PostgreSQL", icon: <Database size={18} /> },
-      { name: "Postman", icon: <Cloud size={18} /> },
+      { name: "Git", icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" width={24} height={24} alt="Git" /> },
+      { name: "Docker", icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" width={24} height={24} alt="Docker" /> },
+      { name: "AWS", icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" width={24} height={24} alt="AWS" style={{filter: 'invert(1)'}} /> },
+      { name: "MongoDB", icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg" width={24} height={24} alt="MongoDB" /> },
+      { name: "PostgreSQL", icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" width={24} height={24} alt="PostgreSQL" /> },
+      { name: "Postman", icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg" width={24} height={24} alt="Postman" /> },
     ]
   }
 ];
