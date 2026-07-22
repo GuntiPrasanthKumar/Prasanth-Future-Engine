@@ -240,7 +240,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .career-objective-card {
   padding: var(--space-4);
-  margin-top: var(--space-2);
+  margin-top: -0.5rem;
   margin-bottom: var(--space-2);
 }
 
@@ -833,6 +833,7 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
   width: 100%;
   height: 100%;
+  min-height: 600px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1109,7 +1110,7 @@ h1, h2, h3, h4, h5, h6 {
 .context-card-wrapper {
   position: absolute;
   right: -4rem;
-  top: 50%;
+  top: calc(50% - 20px);
   transform: translateY(-50%);
   z-index: 100;
   pointer-events: none;
@@ -2907,7 +2908,9 @@ body, a, button, .ai-quick-action-card, .project-card, .tech-node, .nav-btn, .fo
 
 /* --- MOBILE TECH MARQUEE --- */
 .mobile-tech-modules {
-  width: 100%;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
   display: flex;
   flex-direction: column;
   gap: 2.5rem;
@@ -2915,7 +2918,6 @@ body, a, button, .ai-quick-action-card, .project-card, .tech-node, .nav-btn, .fo
   overflow: hidden;
   position: relative;
   /* Full bleed on mobile */
-  margin-left: -1rem;
   margin-right: -1rem;
   width: calc(100% + 2rem);
 }
@@ -2995,3 +2997,23 @@ body, a, button, .ai-quick-action-card, .project-card, .tech-node, .nav-btn, .fo
 
 
 
+
+.mobile-tech-modules { grid-column: 1 / -1; }
+
+.desktop-tech-modules {
+  position: absolute;
+  bottom: -3.5rem;
+  left: -20%;
+  width: 140%;
+  padding: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+@media (max-width: 1024px) {
+  .desktop-tech-modules {
+    display: none !important;
+  }
+}

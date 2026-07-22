@@ -127,11 +127,11 @@ export default function About({ isCoreArrived }) {
           <div className="timeline-group" style={{ marginBottom: '3rem' }}>
             <h2 className="timeline-header">ENGINEERING VISION</h2>
             <m.div variants={cardVariants} className="career-objective-card glass-card">
-              <p className="career-objective-text">
+              <div className="career-objective-text">
                 I don't just aspire to work in Artificial Intelligence—I aspire to <span className="highlight">engineer intelligent systems that create real impact</span>.
-                <br/><br/>
+                <div style={{ height: '0.5rem' }} />
                 My mission is to build products where Artificial Intelligence, software engineering, and human-centered design come together to solve meaningful problems. I am committed to continuously learning, embracing challenging opportunities, and contributing to teams that are shaping the future through innovation, scalability, and engineering excellence.
-              </p>
+              </div>
             </m.div>
           </div>
 

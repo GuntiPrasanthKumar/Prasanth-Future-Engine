@@ -244,7 +244,6 @@ const MobileTechMarquee = () => {
     <div className="mobile-tech-modules desktop-hidden">
       {mobileModules.map((module, idx) => (
         <div key={idx} className="tech-module">
-          <div className="tech-module-title">{module.title}</div>
           <div className="marquee-container">
             <div className={`marquee-track ${module.direction}`}>
               {/* Render two exact halves to make CSS transform from 0 to -50% perfectly seamless */}
@@ -254,6 +253,31 @@ const MobileTechMarquee = () => {
           </div>
         </div>
       ))}
+    </div>
+  );
+};
+
+const DesktopTechMarquee = () => {
+  const row1 = [...mobileModules[0].techs, ...mobileModules[1].techs];
+  const row2 = [...mobileModules[2].techs, ...mobileModules[3].techs];
+  return (
+    <div className="desktop-tech-modules">
+      <div className="tech-module" style={{ marginBottom: '1.5rem' }}>
+        <div className="marquee-container" style={{ WebkitMaskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)' }}>
+          <div className="marquee-track left">
+            <TechList techs={row1} />
+            <TechList techs={row1} />
+          </div>
+        </div>
+      </div>
+      <div className="tech-module">
+        <div className="marquee-container" style={{ WebkitMaskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)' }}>
+          <div className="marquee-track right">
+            <TechList techs={row2} />
+            <TechList techs={row2} />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
@@ -654,7 +678,7 @@ const Skills = ({ isCoreArrived }) => {
                 </div>
               )}
             </AnimatePresence>
-            
+            <DesktopTechMarquee />
           </div>
           
           <MobileTechMarquee />
