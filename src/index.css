@@ -59,7 +59,7 @@
   border-radius: inherit;
 }
 
-body {
+html, body, #root {
   font-family: 'Inter', sans-serif;
   background-color: var(--bg-color);
   color: var(--text-primary);
@@ -94,7 +94,7 @@ h1, h2, h3, h4, h5, h6 {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   z-index: -1;
   pointer-events: none; /* Let clicks pass through to the 3D scene only when needed, or overlay captures them */
@@ -229,6 +229,7 @@ h1, h2, h3, h4, h5, h6 {
   align-items: flex-start;
   height: 600px; /* Fixed height instead of min-height */
   transform: scale(0.9); /* Scale down the portrait and cards globally */
+  margin-top: 3rem; /* Move portrait downward slightly */
 }
 
 /* ---------------- RESPONSIVE BREAKPOINTS ---------------- */
@@ -301,6 +302,8 @@ h1, h2, h3, h4, h5, h6 {
     width: 100%;
     height: auto;
     margin-bottom: 2rem;
+    transform: none;
+    transform-origin: center;
   }
   .desktop-hidden {
     display: block;
@@ -422,9 +425,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Portrait Specifics */
+.portrait-visuals {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
 .portrait-image-wrapper {
   mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
   -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+  display: flex;
+  justify-content: center;
 }
 
 /* Mobile Cards Grid Wrapper */
@@ -886,7 +899,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .ai-orbit-container {
   position: absolute;
-  top: calc(50% - 20px);
+  top: calc(48% - 30px);
   left: calc(50% - 100px);
   transform: translate(-50%, -50%);
   width: 100%;
@@ -1343,6 +1356,19 @@ h1, h2, h3, h4, h5, h6 {
 .nav-btn:hover, .nav-btn.active {
   color: var(--text-primary);
   background: rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 768px) {
+  .bottom-nav {
+    width: 90%;
+    max-width: 350px;
+    padding: 0.5rem;
+    gap: 0.25rem;
+    justify-content: space-between;
+  }
+  .nav-btn {
+    padding: 0.6rem;
+  }
 }
 
 
@@ -2125,7 +2151,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Certificate Modal */
 .certificate-modal-overlay {
   position: fixed;
-  top: 0; left: 0; width: 100vw; height: 100vh;
+  top: 0; left: 0; width: 100%; height: 100%;
   background: rgba(0, 0, 0, 0.65);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
@@ -2415,7 +2441,7 @@ h1, h2, h3, h4, h5, h6 {
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 100vw;
+  width: 100%;
   height: 400px;
 }
 
@@ -2615,13 +2641,16 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (max-width: 768px) {
+  .footer-section {
+    padding-bottom: 140px;
+  }
   .footer-bottom-row {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.75rem;
     padding-top: 1.5rem;
     margin-top: var(--space-4);
-}
+  }
 }
 
 /* --- CUSTOM CURSOR --- */

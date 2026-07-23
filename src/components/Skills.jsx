@@ -678,7 +678,7 @@ const Skills = ({ isCoreArrived }) => {
                 </div>
               )}
             </AnimatePresence>
-            <DesktopTechMarquee />
+            {/* Removed DesktopTechMarquee as per user request to remove 2 lines */}
           </div>
           
           <MobileTechMarquee />

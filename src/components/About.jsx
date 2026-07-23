@@ -74,6 +74,7 @@ const FloatingCard = ({ icon: Icon, title, desc, delay, top, left, right, bottom
 
 export default function About({ isCoreArrived }) {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isFlipped, setIsFlipped] = useState(false);
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -115,50 +116,109 @@ export default function About({ isCoreArrived }) {
         {/* LEFT COLUMN: TIMELINE */}
         <div className="timeline-section">
           
-          <div className="timeline-group" style={{ marginBottom: '3rem' }}>
-            <h2 className="timeline-header">WHO I AM</h2>
-            <m.div variants={cardVariants} className="career-objective-card glass-card">
-              <p className="career-objective-text">
-                I am a passionate software developer and AI enthusiast dedicated to building intelligent solutions that solve complex, real-world problems.
-              </p>
-            </m.div>
-          </div>
+          <div 
+            style={{ perspective: '1000px', cursor: 'pointer', marginBottom: '2rem' }}
+            onClick={() => setIsFlipped(!isFlipped)}
+          >
+            <m.div
+              style={{
+                width: '100%',
+                position: 'relative',
+                transformStyle: 'preserve-3d',
+              }}
+              animate={{ rotateY: isFlipped ? 180 : 0 }}
+              transition={{ duration: 0.8, type: 'spring', stiffness: 100, damping: 20 }}
+            >
+              {/* FRONT: Who I Am & Vision */}
+              <div 
+                style={{
+                  backfaceVisibility: 'hidden',
+                  WebkitBackfaceVisibility: 'hidden',
+                  position: isFlipped ? 'absolute' : 'relative',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  pointerEvents: isFlipped ? 'none' : 'auto'
+                }}
+              >
+                <div className="timeline-group" style={{ marginBottom: '3rem' }}>
+                  <h2 className="timeline-header">WHO I AM</h2>
+                  <m.div variants={cardVariants} className="career-objective-card glass-card">
+                    <p className="career-objective-text">
+                      AI Engineer specializing in Agentic AI, Machine Learning, and Intelligent Software Systems. I architect scalable AI solutions that learn, reason, and automate complex workflows—transforming ambitious ideas into impactful, production-ready applications.
+                    </p>
+                  </m.div>
+                </div>
 
-          <div className="timeline-group" style={{ marginBottom: '3rem' }}>
-            <h2 className="timeline-header">ENGINEERING VISION</h2>
-            <m.div variants={cardVariants} className="career-objective-card glass-card">
-              <div className="career-objective-text">
-                I don't just aspire to work in Artificial Intelligence—I aspire to <span className="highlight">engineer intelligent systems that create real impact</span>.
-                <div style={{ height: '0.5rem' }} />
-                My mission is to build products where Artificial Intelligence, software engineering, and human-centered design come together to solve meaningful problems. I am committed to continuously learning, embracing challenging opportunities, and contributing to teams that are shaping the future through innovation, scalability, and engineering excellence.
+                <div className="timeline-group" style={{ marginBottom: '1rem' }}>
+                  <h2 className="timeline-header">ENGINEERING VISION</h2>
+                  <m.div variants={cardVariants} className="career-objective-card glass-card">
+                    <div className="career-objective-text">
+                      I don't just aspire to work in Artificial Intelligence—I aspire to <span className="highlight">engineer intelligent systems that create real impact</span>.
+                      <div style={{ height: '0.5rem' }} />
+                      My mission is to build products where Artificial Intelligence, software engineering, and human-centered design come together to solve meaningful problems.
+                    </div>
+                  </m.div>
+                </div>
+                
+                <div style={{ textAlign: 'center', opacity: 0.6, fontSize: '0.85rem', marginTop: '1.5rem', marginBottom: '1.5rem' }}>
+                  Tap to view Academic Journey ➔
+                </div>
+              </div>
+
+              {/* BACK: Academic Journey */}
+              <div 
+                style={{
+                  backfaceVisibility: 'hidden',
+                  WebkitBackfaceVisibility: 'hidden',
+                  position: isFlipped ? 'relative' : 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  transform: 'rotateY(180deg)',
+                  pointerEvents: isFlipped ? 'auto' : 'none'
+                }}
+              >
+                <div className="timeline-group">
+                  <h2 className="timeline-header">ACADEMIC JOURNEY</h2>
+                  <m.div variants={cardVariants} className="timeline-item">
+                    <div className="timeline-dot" />
+                    <div className="timeline-date">2023 - 2027</div>
+                    <h3 className="timeline-title">B.Tech in Information Technology</h3>
+                    <p className="timeline-inst">Aditya College of Engineering and Technology</p>
+                  </m.div>
+                  <m.div variants={cardVariants} className="timeline-item">
+                    <div className="timeline-dot" />
+                    <div className="timeline-date">2021 - 2023</div>
+                    <h3 className="timeline-title">Intermediate (MPC)</h3>
+                    <p className="timeline-inst">Pragathi Junior College</p>
+                  </m.div>
+                  <m.div variants={cardVariants} className="timeline-item">
+                    <div className="timeline-dot" />
+                    <div className="timeline-date">2016 - 2021</div>
+                    <h3 className="timeline-title">High School</h3>
+                    <p className="timeline-inst">Zilla Parishadh High School</p>
+                  </m.div>
+                </div>
+                
+                <div style={{ textAlign: 'center', opacity: 0.6, fontSize: '0.85rem', marginTop: '1.5rem', marginBottom: '1.5rem' }}>
+                  ➔ Tap to view About Me
+                </div>
               </div>
             </m.div>
           </div>
 
           <div className="timeline-group">
-            <h2 className="timeline-header">ACADEMIC JOURNEY</h2>
-            <m.div variants={cardVariants}   className="timeline-item">
-              <div className="timeline-dot" />
-              <div className="timeline-date">2023 - 2027</div>
-              <h3 className="timeline-title">B.Tech in Information Technology</h3>
-              <p className="timeline-inst">Aditya College of Engineering and Technology</p>
-            </m.div>
-            <m.div variants={cardVariants}   className="timeline-item">
-              <div className="timeline-dot" />
-              <div className="timeline-date">2021 - 2023</div>
-              <h3 className="timeline-title">Intermediate (MPC)</h3>
-              <p className="timeline-inst">Pragathi Junior College</p>
-            </m.div>
-            <m.div variants={cardVariants}   className="timeline-item">
-              <div className="timeline-dot" />
-              <div className="timeline-date">2016 - 2021</div>
-              <h3 className="timeline-title">High School</h3>
-              <p className="timeline-inst">Zilla Parishadh High School</p>
-            </m.div>
-          </div>
-
-          <div className="timeline-group">
             <h2 className="timeline-header">PROFESSIONAL EXPERIENCE</h2>
+            <m.div variants={cardVariants}   className="timeline-item">
+              <div className="timeline-dot" />
+              <div className="timeline-date">MAY 2026 - JUN 2026</div>
+              <h3 className="timeline-title">Full Stack Developer with AI Intern</h3>
+              <p className="timeline-inst">Technical Hub</p>
+              <p className="timeline-inst" style={{ marginTop: '0.8rem', opacity: 0.8 }}>
+                Integrated AI solutions into full stack applications and optimized complex workflows.
+              </p>
+            </m.div>
             <m.div variants={cardVariants}   className="timeline-item">
               <div className="timeline-dot" />
               <div className="timeline-date">MAY 2025 - JUN 2025</div>
