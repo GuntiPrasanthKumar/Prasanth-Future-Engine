@@ -64,6 +64,9 @@ html, body, #root {
   background-color: var(--bg-color);
   color: var(--text-primary);
   overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
+  position: relative;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -714,8 +717,8 @@ h1, h2, h3, h4, h5, h6 {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 120vw;
-  height: 120vh;
+  width: 120%;
+  height: 120%;
   transform: translate(-50%, -50%);
   background: radial-gradient(circle at center, rgba(255,255,255,0.03) 0%, rgba(5,5,5,0) 60%);
 }
@@ -2939,9 +2942,9 @@ body, a, button, .ai-quick-action-card, .project-card, .tech-node, .nav-btn, .fo
 
 /* --- MOBILE TECH MARQUEE --- */
 .mobile-tech-modules {
-  width: 100vw;
-  margin-left: calc(-50vw + 50%);
-  margin-right: calc(-50vw + 50%);
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
   display: flex;
   flex-direction: column;
   gap: 2.5rem;
