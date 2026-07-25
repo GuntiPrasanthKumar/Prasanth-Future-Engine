@@ -59,14 +59,11 @@
   border-radius: inherit;
 }
 
-html, body, #root {
+body {
   font-family: 'Inter', sans-serif;
   background-color: var(--bg-color);
   color: var(--text-primary);
   overflow-x: hidden;
-  width: 100%;
-  max-width: 100%;
-  position: relative;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
